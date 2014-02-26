@@ -1,0 +1,136 @@
+--- ./setup.py	(original)
++++ ./setup.py	(refactored)
+@@ -65,8 +65,8 @@
+                 print(output)
+ 
+             print("")
+-            print("Documentation step '%s' performed, results here:" % mode)
+-            print("   %s/" % path)
++            print(("Documentation step '%s' performed, results here:" % mode))
++            print(("   %s/" % path))
+ 
+ 
+ class BuildFailed(Exception):
+--- ./cassandra/cqltypes.py	(original)
++++ ./cassandra/cqltypes.py	(refactored)
+@@ -23,9 +23,9 @@
+ import warnings
+ 
+ try:
+-    from io import StringIO
++    from .io import StringIO
+ except ImportError:
+-    from io import StringIO  # NOQA
++    from .io import StringIO  # NOQA
+ 
+ from cassandra.marshal import (int8_pack, int8_unpack, uint16_pack, uint16_unpack,
+                                int32_pack, int32_unpack, int64_pack, int64_unpack,
+@@ -612,7 +612,7 @@
+     @classmethod
+     def validate(cls, val):
+         subkeytype, subvaltype = cls.subtypes
+-        return dict((subkeytype.validate(k), subvaltype.validate(v)) for (k, v) in val.items())
++        return dict((subkeytype.validate(k), subvaltype.validate(v)) for (k, v) in list(val.items()))
+ 
+     @classmethod
+     def deserialize_safe(cls, byts):
+@@ -639,7 +639,7 @@
+         subkeytype, subvaltype = cls.subtypes
+         buf = StringIO()
+         buf.write(uint16_pack(len(themap)))
+-        for key, val in themap.items():
++        for key, val in list(themap.items()):
+             keybytes = subkeytype.to_binary(key)
+             valbytes = subvaltype.to_binary(val)
+             buf.write(uint16_pack(len(keybytes)))
+--- ./cassandra/decoder.py	(original)
++++ ./cassandra/decoder.py	(refactored)
+@@ -15,9 +15,9 @@
+     from cassandra.util import OrderedDict # NOQA
+ 
+ try:
+-    from io import StringIO
++    from .io import StringIO
+ except ImportError:
+-    from io import StringIO  # ignore flake8 warning: # NOQA
++    from .io import StringIO  # ignore flake8 warning: # NOQA
+ 
+ from cassandra import (Unavailable, WriteTimeout, ReadTimeout,
+                        AlreadyExists, InvalidRequest, Unauthorized)
+@@ -821,7 +821,7 @@
+                                  '%s : %s' % (
+                                      cql_encode_all_types(k),
+                                      cql_encode_all_types(v))
+-                                 for k, v in val.items())
++                                 for k, v in list(val.items()))
+ 
+ 
+ def cql_encode_list_collection(val):
+--- ./cassandra/metadata.py	(original)
++++ ./cassandra/metadata.py	(refactored)
+@@ -318,7 +318,7 @@
+ 
+         token_to_host_owner = {}
+         ring = []
+-        for host, token_strings in token_map.items():
++        for host, token_strings in list(token_map.items()):
+             for token_string in token_strings:
+                 token = token_class(token_string)
+                 ring.append(token)
+--- ./cassandra/policies.py	(original)
++++ ./cassandra/policies.py	(refactored)
+@@ -236,7 +236,7 @@
+         for host in islice(cycle(local_live), pos, pos + len(local_live)):
+             yield host
+ 
+-        for dc, current_dc_hosts in self._dc_live_hosts.items():
++        for dc, current_dc_hosts in list(self._dc_live_hosts.items()):
+             if dc == self.local_dc:
+                 continue
+ 
+--- ./cassandra/query.py	(original)
++++ ./cassandra/query.py	(refactored)
+@@ -306,7 +306,7 @@
+ def bind_params(query, params):
+     if isinstance(params, dict):
+         return query % dict((k, cql_encoders.get(type(v), cql_encode_object)(v))
+-                            for k, v in params.items())
++                            for k, v in list(params.items()))
+     else:
+         return query % tuple(cql_encoders.get(type(v), cql_encode_object)(v)
+                              for v in params)
+--- ./tests/integration/long/utils.py	(original)
++++ ./tests/integration/long/utils.py	(refactored)
+@@ -77,7 +77,7 @@
+ 
+ 
+ def ring(node):
+-    print('From node%s:' % node)
++    print(('From node%s:' % node))
+     get_node(node).nodetool('ring')
+ 
+ 
+--- ./tests/unit/test_connection.py	(original)
++++ ./tests/unit/test_connection.py	(refactored)
+@@ -3,7 +3,7 @@
+ except ImportError:
+     import unittest # noqa
+ 
+-from io import StringIO
++from .io import StringIO
+ 
+ from mock import Mock, ANY
+ 
+--- ./tests/unit/test_policies.py	(original)
++++ ./tests/unit/test_policies.py	(refactored)
+@@ -85,8 +85,8 @@
+                 self.assertEqual(sorted(qplan), hosts)
+ 
+         threads = [Thread(target=check_query_plan) for i in range(4)]
+-        list(map(lambda t: t.start(), threads))
+-        list(map(lambda t: t.join(), threads))
++        list([t.start() for t in threads])
++        list([t.join() for t in threads])
+ 
+     def test_no_live_nodes(self):
+         """
