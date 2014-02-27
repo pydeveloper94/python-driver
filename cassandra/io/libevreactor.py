@@ -1,3 +1,4 @@
+from six import StringIO
 from six.moves import queue
 
 from collections import defaultdict, deque
@@ -16,11 +17,6 @@ from cassandra.connection import (Connection, ResponseWaiter, ConnectionShutdown
 from cassandra.decoder import RegisterMessage
 from cassandra.marshal import int32_unpack
 import cassandra.io.libevwrapper as libev
-
-try:
-    from io import StringIO
-except ImportError:
-    from io import StringIO  # ignore flake8 warning: # NOQA
 
 try:
     import ssl

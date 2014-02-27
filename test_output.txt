@@ -1,5 +1,5 @@
 ======================================================================
-ERROR: Failure: SyntaxError (invalid syntax (decoder.py, line 88))
+ERROR: Failure: ImportError (cannot import name StringIO)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
   File "/home/lucas/Programming/Python/cassandra/venv/2.6/lib/python2.6/site-packages/nose/loader.py", line 413, in loadTestsFromName
@@ -14,13 +14,12 @@ Traceback (most recent call last):
     from cassandra.connection import ConnectionException, ConnectionShutdown
   File "/home/lucas/Programming/Python/cassandra/python-driver/cassandra/connection.py", line 10, in <module>
     from cassandra.decoder import (ReadyMessage, AuthenticateMessage, OptionsMessage,
-  File "/home/lucas/Programming/Python/cassandra/python-driver/cassandra/decoder.py", line 88
-    class _MessageType(object, metaclass=_register_msg_type):
-                                        ^
-SyntaxError: invalid syntax
+  File "/home/lucas/Programming/Python/cassandra/python-driver/cassandra/decoder.py", line 20, in <module>
+    from io import StringIO  # ignore flake8 warning: # NOQA
+ImportError: cannot import name StringIO
 
 ======================================================================
-ERROR: Failure: SyntaxError (invalid syntax (decoder.py, line 88))
+ERROR: Failure: ImportError (cannot import name StringIO)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
   File "/home/lucas/Programming/Python/cassandra/venv/2.6/lib/python2.6/site-packages/nose/loader.py", line 413, in loadTestsFromName
@@ -33,13 +32,12 @@ Traceback (most recent call last):
     from cassandra.connection import (PROTOCOL_VERSION,
   File "/home/lucas/Programming/Python/cassandra/python-driver/cassandra/connection.py", line 10, in <module>
     from cassandra.decoder import (ReadyMessage, AuthenticateMessage, OptionsMessage,
-  File "/home/lucas/Programming/Python/cassandra/python-driver/cassandra/decoder.py", line 88
-    class _MessageType(object, metaclass=_register_msg_type):
-                                        ^
-SyntaxError: invalid syntax
+  File "/home/lucas/Programming/Python/cassandra/python-driver/cassandra/decoder.py", line 20, in <module>
+    from io import StringIO  # ignore flake8 warning: # NOQA
+ImportError: cannot import name StringIO
 
 ======================================================================
-ERROR: Failure: SyntaxError (invalid syntax (decoder.py, line 88))
+ERROR: Failure: ImportError (cannot import name StringIO)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
   File "/home/lucas/Programming/Python/cassandra/venv/2.6/lib/python2.6/site-packages/nose/loader.py", line 413, in loadTestsFromName
@@ -52,10 +50,9 @@ Traceback (most recent call last):
     from cassandra.connection import (PROTOCOL_VERSION,
   File "/home/lucas/Programming/Python/cassandra/python-driver/cassandra/connection.py", line 10, in <module>
     from cassandra.decoder import (ReadyMessage, AuthenticateMessage, OptionsMessage,
-  File "/home/lucas/Programming/Python/cassandra/python-driver/cassandra/decoder.py", line 88
-    class _MessageType(object, metaclass=_register_msg_type):
-                                        ^
-SyntaxError: invalid syntax
+  File "/home/lucas/Programming/Python/cassandra/python-driver/cassandra/decoder.py", line 20, in <module>
+    from io import StringIO  # ignore flake8 warning: # NOQA
+ImportError: cannot import name StringIO
 
 ======================================================================
 ERROR: Failure: ImportError (cannot import name StringIO)
@@ -72,7 +69,7 @@ Traceback (most recent call last):
 ImportError: cannot import name StringIO
 
 ======================================================================
-ERROR: Failure: SyntaxError (invalid syntax (decoder.py, line 88))
+ERROR: Failure: ImportError (cannot import name StringIO)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
   File "/home/lucas/Programming/Python/cassandra/venv/2.6/lib/python2.6/site-packages/nose/loader.py", line 413, in loadTestsFromName
@@ -83,13 +80,12 @@ Traceback (most recent call last):
     mod = load_module(part_fqname, fh, filename, desc)
   File "/home/lucas/Programming/Python/cassandra/python-driver/tests/unit/test_control_connection.py", line 11, in <module>
     from cassandra.decoder import ResultMessage
-  File "/home/lucas/Programming/Python/cassandra/python-driver/cassandra/decoder.py", line 88
-    class _MessageType(object, metaclass=_register_msg_type):
-                                        ^
-SyntaxError: invalid syntax
+  File "/home/lucas/Programming/Python/cassandra/python-driver/cassandra/decoder.py", line 20, in <module>
+    from io import StringIO  # ignore flake8 warning: # NOQA
+ImportError: cannot import name StringIO
 
 ======================================================================
-ERROR: Failure: SyntaxError (invalid syntax (decoder.py, line 88))
+ERROR: Failure: ImportError (cannot import name StringIO)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
   File "/home/lucas/Programming/Python/cassandra/venv/2.6/lib/python2.6/site-packages/nose/loader.py", line 413, in loadTestsFromName
@@ -104,13 +100,12 @@ Traceback (most recent call last):
     from cassandra.connection import ConnectionException, ConnectionShutdown
   File "/home/lucas/Programming/Python/cassandra/python-driver/cassandra/connection.py", line 10, in <module>
     from cassandra.decoder import (ReadyMessage, AuthenticateMessage, OptionsMessage,
-  File "/home/lucas/Programming/Python/cassandra/python-driver/cassandra/decoder.py", line 88
-    class _MessageType(object, metaclass=_register_msg_type):
-                                        ^
-SyntaxError: invalid syntax
+  File "/home/lucas/Programming/Python/cassandra/python-driver/cassandra/decoder.py", line 20, in <module>
+    from io import StringIO  # ignore flake8 warning: # NOQA
+ImportError: cannot import name StringIO
 
 ======================================================================
-ERROR: Failure: SyntaxError (invalid syntax (cqltypes.py, line 155))
+ERROR: Failure: ImportError (cannot import name StringIO)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
   File "/home/lucas/Programming/Python/cassandra/venv/2.6/lib/python2.6/site-packages/nose/loader.py", line 413, in loadTestsFromName
@@ -121,13 +116,12 @@ Traceback (most recent call last):
     mod = load_module(part_fqname, fh, filename, desc)
   File "/home/lucas/Programming/Python/cassandra/python-driver/tests/unit/test_marshalling.py", line 22, in <module>
     from cassandra.cqltypes import lookup_casstype
-  File "/home/lucas/Programming/Python/cassandra/python-driver/cassandra/cqltypes.py", line 155
-    class _CassandraType(object, metaclass=CassandraTypeType):
-                                          ^
-SyntaxError: invalid syntax
+  File "/home/lucas/Programming/Python/cassandra/python-driver/cassandra/cqltypes.py", line 28, in <module>
+    from io import StringIO  # NOQA
+ImportError: cannot import name StringIO
 
 ======================================================================
-ERROR: Failure: SyntaxError (invalid syntax (cqltypes.py, line 155))
+ERROR: Failure: ImportError (cannot import name StringIO)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
   File "/home/lucas/Programming/Python/cassandra/venv/2.6/lib/python2.6/site-packages/nose/loader.py", line 413, in loadTestsFromName
@@ -140,13 +134,12 @@ Traceback (most recent call last):
     from cassandra.metadata import (Murmur3Token, MD5Token,
   File "/home/lucas/Programming/Python/cassandra/python-driver/cassandra/metadata.py", line 21, in <module>
     import cassandra.cqltypes as types
-  File "/home/lucas/Programming/Python/cassandra/python-driver/cassandra/cqltypes.py", line 155
-    class _CassandraType(object, metaclass=CassandraTypeType):
-                                          ^
-SyntaxError: invalid syntax
+  File "/home/lucas/Programming/Python/cassandra/python-driver/cassandra/cqltypes.py", line 28, in <module>
+    from io import StringIO  # NOQA
+ImportError: cannot import name StringIO
 
 ======================================================================
-ERROR: Failure: SyntaxError (invalid syntax (cqltypes.py, line 155))
+ERROR: Failure: ImportError (cannot import name StringIO)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
   File "/home/lucas/Programming/Python/cassandra/venv/2.6/lib/python2.6/site-packages/nose/loader.py", line 413, in loadTestsFromName
@@ -159,13 +152,12 @@ Traceback (most recent call last):
     from cassandra.query import bind_params, ValueSequence
   File "/home/lucas/Programming/Python/cassandra/python-driver/cassandra/query.py", line 12, in <module>
     from cassandra.cqltypes import unix_time_from_uuid1
-  File "/home/lucas/Programming/Python/cassandra/python-driver/cassandra/cqltypes.py", line 155
-    class _CassandraType(object, metaclass=CassandraTypeType):
-                                          ^
-SyntaxError: invalid syntax
+  File "/home/lucas/Programming/Python/cassandra/python-driver/cassandra/cqltypes.py", line 28, in <module>
+    from io import StringIO  # NOQA
+ImportError: cannot import name StringIO
 
 ======================================================================
-ERROR: Failure: SyntaxError (invalid syntax (decoder.py, line 88))
+ERROR: Failure: ImportError (cannot import name StringIO)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
   File "/home/lucas/Programming/Python/cassandra/venv/2.6/lib/python2.6/site-packages/nose/loader.py", line 413, in loadTestsFromName
@@ -180,13 +172,12 @@ Traceback (most recent call last):
     from cassandra.connection import ConnectionException, ConnectionShutdown
   File "/home/lucas/Programming/Python/cassandra/python-driver/cassandra/connection.py", line 10, in <module>
     from cassandra.decoder import (ReadyMessage, AuthenticateMessage, OptionsMessage,
-  File "/home/lucas/Programming/Python/cassandra/python-driver/cassandra/decoder.py", line 88
-    class _MessageType(object, metaclass=_register_msg_type):
-                                        ^
-SyntaxError: invalid syntax
+  File "/home/lucas/Programming/Python/cassandra/python-driver/cassandra/decoder.py", line 20, in <module>
+    from io import StringIO  # ignore flake8 warning: # NOQA
+ImportError: cannot import name StringIO
 
 ======================================================================
-ERROR: Failure: SyntaxError (invalid syntax (decoder.py, line 88))
+ERROR: Failure: ImportError (cannot import name StringIO)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
   File "/home/lucas/Programming/Python/cassandra/venv/2.6/lib/python2.6/site-packages/nose/loader.py", line 413, in loadTestsFromName
@@ -201,13 +192,12 @@ Traceback (most recent call last):
     from cassandra.connection import ConnectionException, ConnectionShutdown
   File "/home/lucas/Programming/Python/cassandra/python-driver/cassandra/connection.py", line 10, in <module>
     from cassandra.decoder import (ReadyMessage, AuthenticateMessage, OptionsMessage,
-  File "/home/lucas/Programming/Python/cassandra/python-driver/cassandra/decoder.py", line 88
-    class _MessageType(object, metaclass=_register_msg_type):
-                                        ^
-SyntaxError: invalid syntax
+  File "/home/lucas/Programming/Python/cassandra/python-driver/cassandra/decoder.py", line 20, in <module>
+    from io import StringIO  # ignore flake8 warning: # NOQA
+ImportError: cannot import name StringIO
 
 ======================================================================
-ERROR: Failure: SyntaxError (invalid syntax (cqltypes.py, line 155))
+ERROR: Failure: ImportError (cannot import name StringIO)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
   File "/home/lucas/Programming/Python/cassandra/venv/2.6/lib/python2.6/site-packages/nose/loader.py", line 413, in loadTestsFromName
@@ -218,11 +208,12 @@ Traceback (most recent call last):
     mod = load_module(part_fqname, fh, filename, desc)
   File "/home/lucas/Programming/Python/cassandra/python-driver/tests/unit/test_types.py", line 4, in <module>
     from cassandra.cqltypes import (BooleanType, lookup_casstype_simple, lookup_casstype,
-  File "/home/lucas/Programming/Python/cassandra/python-driver/cassandra/cqltypes.py", line 155
-    class _CassandraType(object, metaclass=CassandraTypeType):
-                                          ^
-SyntaxError: invalid syntax
+  File "/home/lucas/Programming/Python/cassandra/python-driver/cassandra/cqltypes.py", line 28, in <module>
+    from io import StringIO  # NOQA
+ImportError: cannot import name StringIO
 
 ----------------------------------------------------------------------
-Ran 12 tests in 0.401s
+Ran 12 tests in 0.403s
+
+FAILED (errors=12)
 

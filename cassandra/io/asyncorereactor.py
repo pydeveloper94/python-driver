@@ -1,5 +1,6 @@
 
 from six.moves import queue
+from six import StringIO
 
 from collections import defaultdict, deque
 from functools import partial
@@ -13,11 +14,6 @@ import traceback
 from errno import EALREADY, EINPROGRESS, EWOULDBLOCK, EINVAL, EISCONN, errorcode
 
 import asyncore
-
-try:
-    from io import StringIO
-except ImportError:
-    from io import StringIO  # ignore flake8 warning: # NOQA
 
 try:
     import ssl

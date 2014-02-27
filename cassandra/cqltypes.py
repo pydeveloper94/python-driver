@@ -13,6 +13,8 @@ the corresponding CQL or Cassandra type strings.
 # for example), these classes would be a good place to tack on
 # .from_cql_literal() and .as_cql_literal() classmethods (or whatever).
 
+from six import StringIO
+
 import calendar
 from decimal import Decimal
 import re
@@ -21,11 +23,6 @@ import time
 from datetime import datetime
 from uuid import UUID
 import warnings
-
-try:
-    from io import StringIO
-except ImportError:
-    from io import StringIO  # NOQA
 
 from cassandra.marshal import (int8_pack, int8_unpack, uint16_pack, uint16_unpack,
                                int32_pack, int32_unpack, int64_pack, int64_unpack,

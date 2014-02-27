@@ -1,3 +1,5 @@
+from six import StringIO
+
 from binascii import hexlify
 import calendar
 from collections import namedtuple
@@ -13,11 +15,6 @@ try:
     from collections import OrderedDict
 except ImportError:  # Python <2.7
     from cassandra.util import OrderedDict # NOQA
-
-try:
-    from io import StringIO
-except ImportError:
-    from io import StringIO  # ignore flake8 warning: # NOQA
 
 from cassandra import (Unavailable, WriteTimeout, ReadTimeout,
                        AlreadyExists, InvalidRequest, Unauthorized)
