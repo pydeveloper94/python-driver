@@ -155,7 +155,7 @@ class TypeTests(unittest.TestCase):
             mydatetime,  # timestamp
             v4_uuid,  # uuid
             v1_uuid,  # timeuuid
-            u"sometext\u1234",  # varchar
+            "sometext\u1234",  # varchar
             123456789123456789123456789  # varint
         ]
 
@@ -177,7 +177,7 @@ class TypeTests(unittest.TestCase):
             mydatetime,  # timestamp
             v4_uuid,  # uuid
             v1_uuid,  # timeuuid
-            u"sometext\u1234",  # varchar
+            "sometext\u1234",  # varchar
             123456789123456789123456789  # varint
         )
 
@@ -224,7 +224,7 @@ class TypeTests(unittest.TestCase):
         """ Ensure timezone-aware datetimes are converted to timestamps correctly """
         try:
             import pytz
-        except ImportError, exc:
+        except ImportError as exc:
             raise unittest.SkipTest('pytz is not available: %r' % (exc,))
 
         dt = datetime(1997, 8, 29, 11, 14)

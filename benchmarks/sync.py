@@ -5,7 +5,7 @@ class Runner(BenchmarkThread):
     def run(self):
         self.start_profile()
 
-        for i in xrange(self.num_queries):
+        for i in range(self.num_queries):
             self.session.execute(self.query, self.values)
 
         self.finish_profile()

@@ -1,4 +1,4 @@
-import Queue
+import queue
 from struct import pack
 import unittest
 
@@ -38,14 +38,14 @@ class LargeDataTests(unittest.TestCase):
         return session
 
     def batch_futures(self, session, statement_generator):
-        futures = Queue.Queue(maxsize=121)
+        futures = queue.Queue(maxsize=121)
         for i, statement in enumerate(statement_generator):
             if i > 0 and i % 120 == 0:
                 # clear the existing queue
                 while True:
                     try:
                         futures.get_nowait().result()
-                    except Queue.Empty:
+                    except queue.Empty:
                         break
 
             future = session.execute_async(statement)
@@ -54,7 +54,7 @@ class LargeDataTests(unittest.TestCase):
         while True:
             try:
                 futures.get_nowait().result()
-            except Queue.Empty:
+            except queue.Empty:
                 break
 
     def test_wide_rows(self):

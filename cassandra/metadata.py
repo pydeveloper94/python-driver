@@ -74,7 +74,7 @@ class Metadata(object):
         Returns a string that can be executed as a query in order to recreate
         the entire schema.  The string is formatted to be human readable.
         """
-        return "\n".join(ks.export_as_string() for ks in self.keyspaces.values())
+        return "\n".join(ks.export_as_string() for ks in list(self.keyspaces.values()))
 
     def rebuild_schema(self, ks_results, cf_results, col_results):
         """
@@ -111,9 +111,9 @@ class Metadata(object):
                 self._keyspace_added(keyspace_meta.name)
 
         # remove not-just-added keyspaces
-        removed_keyspaces = [ksname for ksname in self.keyspaces.keys()
+        removed_keyspaces = [ksname for ksname in list(self.keyspaces.keys())
                              if ksname not in current_keyspaces]
-        self.keyspaces = dict((name, meta) for name, meta in self.keyspaces.items()
+        self.keyspaces = dict((name, meta) for name, meta in list(self.keyspaces.items())
                               if name in current_keyspaces)
         for ksname in removed_keyspaces:
             self._keyspace_removed(ksname)
@@ -318,7 +318,7 @@ class Metadata(object):
 
         token_to_host_owner = {}
         ring = []
-        for host, token_strings in token_map.iteritems():
+        for host, token_strings in token_map.items():
             for token_string in token_strings:
                 token = token_class(token_string)
                 ring.append(token)
@@ -370,7 +370,7 @@ class Metadata(object):
         Returns a list of all known :class:`.Host` instances in the cluster.
         """
         with self._hosts_lock:
-            return self._hosts.values()
+            return list(self._hosts.values())
 
 
 class ReplicationStrategy(object):
@@ -452,9 +452,9 @@ class NetworkTopologyStrategy(ReplicationStrategy):
         # note: this does not account for hosts having different racks
         replica_map = defaultdict(list)
         ring_len = len(ring)
-        ring_len_range = range(ring_len)
+        ring_len_range = list(range(ring_len))
         dc_rf_map = dict((dc, int(rf))
-                         for dc, rf in self.dc_replication_factors.items() if rf > 0)
+                         for dc, rf in list(self.dc_replication_factors.items()) if rf > 0)
         dcs = dict((h, h.datacenter) for h in set(token_to_host_owner.values()))
 
         # build a map of DCs to lists of indexes into `ring` for tokens that
@@ -473,7 +473,7 @@ class NetworkTopologyStrategy(ReplicationStrategy):
             replicas = replica_map[ring[i]]
 
             # go through each DC and find the replicas in that DC
-            for dc in dc_to_token_offset.keys():
+            for dc in list(dc_to_token_offset.keys()):
                 if dc not in remaining:
                     continue
 
@@ -561,7 +561,7 @@ class KeyspaceMetadata(object):
         self.tables = {}
 
     def export_as_string(self):
-        return "\n".join([self.as_cql_query()] + [t.export_as_string() for t in self.tables.values()])
+        return "\n".join([self.as_cql_query()] + [t.export_as_string() for t in list(self.tables.values())])
 
     def as_cql_query(self):
         ret = "CREATE KEYSPACE %s WITH replication = %s " % (
@@ -661,7 +661,7 @@ class TableMetadata(object):
         ret = self.as_cql_query(formatted=True)
         ret += ";"
 
-        for col_meta in self.columns.values():
+        for col_meta in list(self.columns.values()):
             if col_meta.index:
                 ret += "\n%s;" % (col_meta.index.as_cql_query(),)
 
@@ -686,7 +686,7 @@ class TableMetadata(object):
             padding = ""
 
         columns = []
-        for col in self.columns.values():
+        for col in list(self.columns.values()):
             columns.append("%s %s" % (protect_name(col.name), col.typestring))
 
         if len(self.partition_key) == 1 and not self.clustering_key:
@@ -753,13 +753,13 @@ class TableMetadata(object):
 
 
 def protect_name(name):
-    if isinstance(name, unicode):
+    if isinstance(name, str):
         name = name.encode('utf8')
     return maybe_escape_name(name)
 
 
 def protect_names(names):
-    return map(protect_name, names)
+    return list(map(protect_name, names))
 
 
 def protect_value(value):
@@ -1014,7 +1014,7 @@ class BytesToken(Token):
 
     def __init__(self, token_string):
         """ `token_string` should be string representing the token. """
-        if not isinstance(token_string, basestring):
+        if not isinstance(token_string, str):
             raise TypeError(
                 "Tokens for ByteOrderedPartitioner should be strings (got %s)"
                 % (type(token_string),))

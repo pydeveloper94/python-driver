@@ -2,7 +2,7 @@ import errno
 from functools import wraps, partial
 import logging
 from threading import Event, RLock
-from Queue import Queue
+from queue import Queue
 
 from cassandra import ConsistencyLevel, AuthenticationFailed, OperationTimedOut
 from cassandra.marshal import int8_unpack, int32_pack
@@ -168,7 +168,7 @@ class Connection(object):
 
     @defunct_on_error
     def process_msg(self, msg, body_len):
-        version, flags, stream_id, opcode = map(int8_unpack, msg[:4])
+        version, flags, stream_id, opcode = list(map(int8_unpack, msg[:4]))
         if stream_id < 0:
             callback = None
         else:
@@ -262,10 +262,10 @@ class Connection(object):
             if len(overlap) == 0:
                 log.debug("No available compression types supported on both ends."
                           " locally supported: %r. remotely supported: %r",
-                          locally_supported_compressions.keys(),
+                          list(locally_supported_compressions.keys()),
                           remote_supported_compressions)
             else:
-                compression_type = iter(overlap).next()  # choose any
+                compression_type = next(iter(overlap))  # choose any
                 # set the decompressor here, but set the compressor only after
                 # a successful Ready message
                 self._compressor, self.decompressor = \

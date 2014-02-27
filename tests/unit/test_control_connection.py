@@ -24,7 +24,7 @@ class MockMetadata(object):
             "192.168.1.1": Host("192.168.1.1", SimpleConvictionPolicy),
             "192.168.1.2": Host("192.168.1.2", SimpleConvictionPolicy)
         }
-        for host in self.hosts.values():
+        for host in list(self.hosts.values()):
             host.set_up()
 
         self.cluster_name = None
@@ -35,7 +35,7 @@ class MockMetadata(object):
         return self.hosts.get(rpc_address)
 
     def all_hosts(self):
-        return self.hosts.values()
+        return list(self.hosts.values())
 
     def rebuild_token_map(self, partitioner, token_map):
         self.partitioner = partitioner
@@ -187,7 +187,7 @@ class ControlConnectionTest(unittest.TestCase):
 
         # check token map
         self.assertEqual(sorted(meta.all_hosts()), sorted(meta.token_map.keys()))
-        for token_list in meta.token_map.values():
+        for token_list in list(meta.token_map.values()):
             self.assertEqual(3, len(token_list))
 
         # check datacenter/rack

@@ -145,7 +145,7 @@ class _ReconnectionHandler(object):
         # TODO cancel previous reconnection handlers? That's probably the job
         # of whatever created this.
 
-        first_delay = self.schedule.next()
+        first_delay = next(self.schedule)
         self.scheduler.schedule(first_delay, self.run)
 
     def run(self):
@@ -156,7 +156,7 @@ class _ReconnectionHandler(object):
         try:
             conn = self.try_reconnect()
         except Exception as exc:
-            next_delay = self.schedule.next()
+            next_delay = next(self.schedule)
             if self.on_exception(exc, next_delay):
                 self.scheduler.schedule(next_delay, self.run)
         else:
@@ -338,7 +338,7 @@ class HostConnectionPool(object):
     def _create_new_connection(self):
         try:
             self._add_conn_if_under_max()
-        except (ConnectionException, socket.error), exc:
+        except (ConnectionException, socket.error) as exc:
             log.warn("Failed to create new connection to %s: %s", self.host, exc)
         except Exception:
             log.exception("Unexpectedly failed to create new connection")

@@ -23,9 +23,9 @@ from uuid import UUID
 import warnings
 
 try:
-    from cStringIO import StringIO
+    from io import StringIO
 except ImportError:
-    from StringIO import StringIO  # NOQA
+    from io import StringIO  # NOQA
 
 from cassandra.marshal import (int8_pack, int8_unpack, uint16_pack, uint16_unpack,
                                int32_pack, int32_unpack, int64_pack, int64_unpack,
@@ -34,7 +34,7 @@ from cassandra.marshal import (int8_pack, int8_unpack, uint16_pack, uint16_unpac
 
 apache_cassandra_type_prefix = 'org.apache.cassandra.db.marshal.'
 
-_number_types = frozenset((int, long, float))
+_number_types = frozenset((int, int, float))
 
 try:
     from blist import sortedset
@@ -152,8 +152,7 @@ def lookup_casstype(casstype):
         raise ValueError("Don't know how to parse type string %r: %s" % (casstype, e))
 
 
-class _CassandraType(object):
-    __metaclass__ = CassandraTypeType
+class _CassandraType(object, metaclass=CassandraTypeType):
     subtypes = ()
     num_subtypes = 0
     empty_binary_ok = False
@@ -447,7 +446,7 @@ class DateType(_CassandraType):
 
     @classmethod
     def validate(cls, date):
-        if isinstance(date, basestring):
+        if isinstance(date, str):
             date = cls.interpret_datestring(date)
         return date
 
@@ -500,7 +499,7 @@ class DateType(_CassandraType):
                     "driver.")
             converted = v * 1e3
 
-        return int64_pack(long(converted))
+        return int64_pack(int(converted))
 
 class TimestampType(DateType):
     pass
@@ -574,7 +573,7 @@ class _SimpleParameterizedType(_ParameterizedType):
         numelements = uint16_unpack(byts[:2])
         p = 2
         result = []
-        for n in xrange(numelements):
+        for n in range(numelements):
             itemlen = uint16_unpack(byts[p:p + 2])
             p += 2
             item = byts[p:p + itemlen]
@@ -613,7 +612,7 @@ class MapType(_ParameterizedType):
     @classmethod
     def validate(cls, val):
         subkeytype, subvaltype = cls.subtypes
-        return dict((subkeytype.validate(k), subvaltype.validate(v)) for (k, v) in val.iteritems())
+        return dict((subkeytype.validate(k), subvaltype.validate(v)) for (k, v) in val.items())
 
     @classmethod
     def deserialize_safe(cls, byts):
@@ -621,7 +620,7 @@ class MapType(_ParameterizedType):
         numelements = uint16_unpack(byts[:2])
         p = 2
         themap = OrderedDict()
-        for n in xrange(numelements):
+        for n in range(numelements):
             key_len = uint16_unpack(byts[p:p + 2])
             p += 2
             keybytes = byts[p:p + key_len]
@@ -640,7 +639,7 @@ class MapType(_ParameterizedType):
         subkeytype, subvaltype = cls.subtypes
         buf = StringIO()
         buf.write(uint16_pack(len(themap)))
-        for key, val in themap.iteritems():
+        for key, val in themap.items():
             keybytes = subkeytype.to_binary(key)
             valbytes = subvaltype.to_binary(val)
             buf.write(uint16_pack(len(keybytes)))
@@ -686,7 +685,7 @@ class ReversedType(_ParameterizedType):
 
 
 def is_counter_type(t):
-    if isinstance(t, basestring):
+    if isinstance(t, str):
         t = lookup_casstype(t)
     return issubclass(t, CounterColumnType)
 

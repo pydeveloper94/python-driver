@@ -7,15 +7,15 @@ import sys
 from threading import Event, Lock, Thread
 import time
 import traceback
-import Queue
+import queue
 from errno import EALREADY, EINPROGRESS, EWOULDBLOCK, EINVAL, EISCONN, errorcode
 
 import asyncore
 
 try:
-    from cStringIO import StringIO
+    from io import StringIO
 except ImportError:
-    from StringIO import StringIO  # ignore flake8 warning: # NOQA
+    from io import StringIO  # ignore flake8 warning: # NOQA
 
 try:
     import ssl
@@ -204,7 +204,7 @@ class AsyncoreConnection(Connection, asyncore.dispatcher):
             callbacks = self._callbacks
             self._callbacks = {}
         new_exc = ConnectionShutdown(str(exc))
-        for cb in callbacks.values():
+        for cb in list(callbacks.values()):
             try:
                 cb(new_exc)
             except Exception:
@@ -310,7 +310,7 @@ class AsyncoreConnection(Connection, asyncore.dispatcher):
         sabs = self.out_buffer_size
         if len(data) > sabs:
             chunks = []
-            for i in xrange(0, len(data), sabs):
+            for i in range(0, len(data), sabs):
                 chunks.append(data[i:i + sabs])
         else:
             chunks = [data]
@@ -335,7 +335,7 @@ class AsyncoreConnection(Connection, asyncore.dispatcher):
         if not wait_for_id:
             try:
                 request_id = self._id_queue.get_nowait()
-            except Queue.Empty:
+            except queue.Empty:
                 raise ConnectionBusy(
                     "Connection to %s is at the max number of requests" % self.host)
         else:
@@ -377,7 +377,7 @@ class AsyncoreConnection(Connection, asyncore.dispatcher):
             return waiter.deliver(timeout)
         except OperationTimedOut:
             raise
-        except Exception, exc:
+        except Exception as exc:
             self.defunct(exc)
             raise
 
@@ -387,7 +387,7 @@ class AsyncoreConnection(Connection, asyncore.dispatcher):
         self.wait_for_response(RegisterMessage(event_list=[event_type]))
 
     def register_watchers(self, type_callback_dict):
-        for event_type, callback in type_callback_dict.items():
+        for event_type, callback in list(type_callback_dict.items()):
             self._push_watchers[event_type].add(callback)
         self._have_listeners = True
-        self.wait_for_response(RegisterMessage(event_list=type_callback_dict.keys()))
+        self.wait_for_response(RegisterMessage(event_list=list(type_callback_dict.keys())))

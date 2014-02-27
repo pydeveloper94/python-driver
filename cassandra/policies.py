@@ -236,7 +236,7 @@ class DCAwareRoundRobinPolicy(LoadBalancingPolicy):
         for host in islice(cycle(local_live), pos, pos + len(local_live)):
             yield host
 
-        for dc, current_dc_hosts in self._dc_live_hosts.iteritems():
+        for dc, current_dc_hosts in self._dc_live_hosts.items():
             if dc == self.local_dc:
                 continue
 
@@ -491,7 +491,7 @@ class ExponentialReconnectionPolicy(ReconnectionPolicy):
         self.max_delay = max_delay
 
     def new_schedule(self):
-        return (min(self.base_delay * (2 ** i), self.max_delay) for i in xrange(64))
+        return (min(self.base_delay * (2 ** i), self.max_delay) for i in range(64))
 
 
 class WriteType(object):

@@ -53,7 +53,7 @@ class TestRoundRobinPolicy(unittest.TestCase):
         hosts = [0, 1, 2, 3]
         policy = RoundRobinPolicy()
         policy.populate(None, hosts)
-        for i in xrange(20):
+        for i in range(20):
             qplan = list(policy.make_query_plan())
             self.assertEqual(sorted(qplan), hosts)
 
@@ -75,7 +75,7 @@ class TestRoundRobinPolicy(unittest.TestCase):
         self.assertEqual(sorted(qplan), [2, 3, 4, 5])
 
     def test_thread_safety(self):
-        hosts = range(100)
+        hosts = list(range(100))
         policy = RoundRobinPolicy()
         policy.populate(None, hosts)
 
@@ -85,8 +85,8 @@ class TestRoundRobinPolicy(unittest.TestCase):
                 self.assertEqual(sorted(qplan), hosts)
 
         threads = [Thread(target=check_query_plan) for i in range(4)]
-        map(lambda t: t.start(), threads)
-        map(lambda t: t.join(), threads)
+        list(map(lambda t: t.start(), threads))
+        list(map(lambda t: t.join(), threads))
 
     def test_no_live_nodes(self):
         """

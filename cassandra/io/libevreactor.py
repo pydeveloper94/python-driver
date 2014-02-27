@@ -6,7 +6,7 @@ import socket
 from threading import Event, Lock, Thread
 import time
 import traceback
-import Queue
+import queue
 
 from cassandra import OperationTimedOut
 from cassandra.connection import (Connection, ResponseWaiter, ConnectionShutdown,
@@ -17,9 +17,9 @@ from cassandra.marshal import int32_unpack
 import cassandra.io.libevwrapper as libev
 
 try:
-    from cStringIO import StringIO
+    from io import StringIO
 except ImportError:
-    from StringIO import StringIO  # ignore flake8 warning: # NOQA
+    from io import StringIO  # ignore flake8 warning: # NOQA
 
 try:
     import ssl
@@ -256,7 +256,7 @@ class LibevConnection(Connection):
             callbacks = self._callbacks
             self._callbacks = {}
         new_exc = ConnectionShutdown(str(exc))
-        for cb in callbacks.values():
+        for cb in list(callbacks.values()):
             try:
                 cb(new_exc)
             except Exception:
@@ -363,7 +363,7 @@ class LibevConnection(Connection):
         sabs = self.out_buffer_size
         if len(data) > sabs:
             chunks = []
-            for i in xrange(0, len(data), sabs):
+            for i in range(0, len(data), sabs):
                 chunks.append(data[i:i + sabs])
         else:
             chunks = [data]
@@ -381,7 +381,7 @@ class LibevConnection(Connection):
         if not wait_for_id:
             try:
                 request_id = self._id_queue.get_nowait()
-            except Queue.Empty:
+            except queue.Empty:
                 raise ConnectionBusy(
                     "Connection to %s is at the max number of requests" % self.host)
         else:
@@ -423,7 +423,7 @@ class LibevConnection(Connection):
             return waiter.deliver(timeout)
         except OperationTimedOut:
             raise
-        except Exception, exc:
+        except Exception as exc:
             self.defunct(exc)
             raise
 
@@ -432,9 +432,9 @@ class LibevConnection(Connection):
         self.wait_for_response(RegisterMessage(event_list=[event_type]))
 
     def register_watchers(self, type_callback_dict):
-        for event_type, callback in type_callback_dict.items():
+        for event_type, callback in list(type_callback_dict.items()):
             self._push_watchers[event_type].add(callback)
-        self.wait_for_response(RegisterMessage(event_list=type_callback_dict.keys()))
+        self.wait_for_response(RegisterMessage(event_list=list(type_callback_dict.keys())))
 
 
 _preparer = libev.Prepare(_loop, LibevConnection.loop_will_run)

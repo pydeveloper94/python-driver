@@ -62,11 +62,11 @@ class DocCommand(Command):
             except subprocess.CalledProcessError as exc:
                 raise RuntimeError("Documentation step '%s' failed: %s: %s" % (mode, exc, exc.output))
             else:
-                print output
+                print(output)
 
-            print ""
-            print "Documentation step '%s' performed, results here:" % mode
-            print "   %s/" % path
+            print("")
+            print(("Documentation step '%s' performed, results here:" % mode))
+            print(("   %s/" % path))
 
 
 class BuildFailed(Exception):
@@ -174,6 +174,8 @@ def run_setup(extensions):
             'Programming Language :: Python :: 2',
             'Programming Language :: Python :: 2.6',
             'Programming Language :: Python :: 2.7',
+            'Programming Language :: Python :: 3',
+            'Programming Language :: Python :: 3.3',
             'Topic :: Software Development :: Libraries :: Python Modules'
         ],
         **kw)
