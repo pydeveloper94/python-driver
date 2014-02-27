@@ -821,7 +821,7 @@ def cql_encode_map_collection(val):
                                  '%s : %s' % (
                                      cql_encode_all_types(k),
                                      cql_encode_all_types(v))
-                                 for k, v in val.items())
+                                 for k, v in list(val.items()))
 
 
 def cql_encode_list_collection(val):

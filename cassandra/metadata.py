@@ -318,7 +318,7 @@ class Metadata(object):
 
         token_to_host_owner = {}
         ring = []
-        for host, token_strings in token_map.items():
+        for host, token_strings in list(token_map.items()):
             for token_string in token_strings:
                 token = token_class(token_string)
                 ring.append(token)

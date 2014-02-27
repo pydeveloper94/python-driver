@@ -77,7 +77,7 @@ def force_stop(node):
 
 
 def ring(node):
-    print('From node%s:' % node)
+    print(('From node%s:' % node))
     get_node(node).nodetool('ring')
 
 

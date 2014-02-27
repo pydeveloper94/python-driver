@@ -236,7 +236,7 @@ class DCAwareRoundRobinPolicy(LoadBalancingPolicy):
         for host in islice(cycle(local_live), pos, pos + len(local_live)):
             yield host
 
-        for dc, current_dc_hosts in self._dc_live_hosts.items():
+        for dc, current_dc_hosts in list(self._dc_live_hosts.items()):
             if dc == self.local_dc:
                 continue
 

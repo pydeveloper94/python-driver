@@ -85,8 +85,8 @@ class TestRoundRobinPolicy(unittest.TestCase):
                 self.assertEqual(sorted(qplan), hosts)
 
         threads = [Thread(target=check_query_plan) for i in range(4)]
-        list(map(lambda t: t.start(), threads))
-        list(map(lambda t: t.join(), threads))
+        list([t.start() for t in threads])
+        list([t.join() for t in threads])
 
     def test_no_live_nodes(self):
         """

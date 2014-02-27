@@ -612,7 +612,7 @@ class MapType(_ParameterizedType):
     @classmethod
     def validate(cls, val):
         subkeytype, subvaltype = cls.subtypes
-        return dict((subkeytype.validate(k), subvaltype.validate(v)) for (k, v) in val.items())
+        return dict((subkeytype.validate(k), subvaltype.validate(v)) for (k, v) in list(val.items()))
 
     @classmethod
     def deserialize_safe(cls, byts):
@@ -639,7 +639,7 @@ class MapType(_ParameterizedType):
         subkeytype, subvaltype = cls.subtypes
         buf = StringIO()
         buf.write(uint16_pack(len(themap)))
-        for key, val in themap.items():
+        for key, val in list(themap.items()):
             keybytes = subkeytype.to_binary(key)
             valbytes = subvaltype.to_binary(val)
             buf.write(uint16_pack(len(keybytes)))
