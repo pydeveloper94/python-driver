@@ -1,3 +1,6 @@
+
+from six.moves import queue
+
 from collections import defaultdict, deque
 from functools import partial
 import logging
@@ -7,7 +10,6 @@ import sys
 from threading import Event, Lock, Thread
 import time
 import traceback
-import queue
 from errno import EALREADY, EINPROGRESS, EWOULDBLOCK, EINVAL, EISCONN, errorcode
 
 import asyncore

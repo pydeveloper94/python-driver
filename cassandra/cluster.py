@@ -3,13 +3,14 @@ This module houses the main classes you will interact with,
 :class:`.Cluster` and :class:`.Session`.
 """
 
+from six.moves import queue
+
 from concurrent.futures import ThreadPoolExecutor
 import logging
 import socket
 import sys
 import time
 from threading import Lock, RLock, Thread, Event
-import queue
 import weakref
 from weakref import WeakValueDictionary
 import collections

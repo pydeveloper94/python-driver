@@ -1,3 +1,5 @@
+from six.moves import queue
+
 from collections import defaultdict, deque
 from functools import partial, wraps
 import logging
@@ -6,7 +8,6 @@ import socket
 from threading import Event, Lock, Thread
 import time
 import traceback
-import queue
 
 from cassandra import OperationTimedOut
 from cassandra.connection import (Connection, ResponseWaiter, ConnectionShutdown,
