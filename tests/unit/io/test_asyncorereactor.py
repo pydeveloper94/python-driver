@@ -1,3 +1,5 @@
+from six import StringIO
+
 try:
     import unittest2 as unittest
 except ImportError:
@@ -5,7 +7,6 @@ except ImportError:
 
 import errno
 import os
-from io import StringIO
 import socket
 from socket import error as socket_error
 

@@ -197,9 +197,11 @@ class ErrorMessage(_MessageType, Exception):
 
 class ErrorMessageSubclass(_register_msg_type):
     def __init__(cls, name, bases, dct):
-        if cls.error_code is not None:
-            error_classes[cls.error_code] = cls
-
+        try:
+            if cls.error_code is not None:
+                error_classes[cls.error_code] = cls
+        except:
+            pass ## cls.error_code is not set
 
 class ErrorMessageSub(ErrorMessage):
     error_code = None

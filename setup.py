@@ -1,5 +1,6 @@
 import platform
 import os
+import six
 import sys
 import warnings
 
@@ -152,6 +153,11 @@ def run_setup(extensions):
     if platform.python_implementation() != "CPython":
         dependencies.remove('blist')
 
+    if six.PY2:
+        TEST_REQUIREMENTS = ['nose', 'mock', 'ccm', 'unittest2', 'PyYAML']
+    else:
+        TEST_REQUIREMENTS = ['nose', 'mock', 'ccm', 'PyYAML']
+
     setup(
         name='cassandra-driver',
         version=__version__,
@@ -163,7 +169,7 @@ def run_setup(extensions):
         packages=['cassandra', 'cassandra.io'],
         include_package_data=True,
         install_requires=dependencies,
-        tests_require=['nose', 'mock', 'ccm', 'unittest2', 'PyYAML'],
+        tests_require=TEST_REQUIREMENTS,
         classifiers=[
             'Development Status :: 5 - Production/Stable',
             'Intended Audience :: Developers',

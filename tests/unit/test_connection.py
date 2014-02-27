@@ -1,9 +1,10 @@
+from six import StringIO
+
 try:
     import unittest2 as unittest
 except ImportError:
     import unittest # noqa
 
-from io import StringIO
 
 from mock import Mock, ANY
 

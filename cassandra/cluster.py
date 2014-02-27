@@ -1388,7 +1388,6 @@ class ControlConnection(object):
             except Exception as exc:
                 errors[host.address] = exc
                 log.warn("[control connection] Error connecting to %s:", host, exc_info=True)
-
         raise NoHostAvailable("Unable to connect to any servers", errors)
 
     def _try_connect(self, host):
