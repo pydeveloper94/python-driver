@@ -789,6 +789,7 @@ def cql_encode_str(val):
 
 
 if sys.version_info >= (2, 7):
+    buffer = memoryview
     def cql_encode_bytes(val):
         return '0x' + hexlify(val)
 else:

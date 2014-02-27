@@ -1,4 +1,5 @@
-from six.moves.queue import Queue
+from six.moves import queue
+Queue = queue.Queue
 
 import errno
 from functools import wraps, partial
