@@ -152,7 +152,7 @@ def lookup_casstype(casstype):
         raise ValueError("Don't know how to parse type string %r: %s" % (casstype, e))
 
 
-class _CassandraType(object, metaclass=CassandraTypeType):
+class _CassandraType(object):
     subtypes = ()
     num_subtypes = 0
     empty_binary_ok = False
@@ -702,3 +702,6 @@ def cql_typename(casstypename):
         'list<varint>'
     """
     return lookup_casstype(casstypename).cql_parameterized_type()
+
+## Metaclass compatibility
+_CassandraType = CassandraTypeType('_CassandraType', (object, ), {})

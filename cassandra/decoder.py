@@ -85,7 +85,7 @@ class _register_msg_type(type):
             _message_types_by_opcode[cls.opcode] = cls
 
 
-class _MessageType(object, metaclass=_register_msg_type):
+class _MessageType(object):
     params = ()
 
     tracing = False
@@ -204,7 +204,7 @@ class ErrorMessageSubclass(_register_msg_type):
             error_classes[cls.error_code] = cls
 
 
-class ErrorMessageSub(ErrorMessage, metaclass=ErrorMessageSubclass):
+class ErrorMessageSub(ErrorMessage):
     error_code = None
 
 
@@ -856,3 +856,7 @@ cql_encoders = {
     frozenset: cql_encode_set_collection,
     types.GeneratorType: cql_encode_list_collection
 }
+
+## Metaclass compatiblity
+_MessageType = _register_msg_type('_MessageType', (object, ), {})
+ErrorMessageSub = ErrorMessageSubclass('ErrorMessageSub', (object, ), {})
